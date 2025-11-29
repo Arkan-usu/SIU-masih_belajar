@@ -17,7 +17,7 @@ export default function Login() {
   return (
     <FormContainer title="Login">
       <input
-        className="w-full p-3 my-2 rounded-lg"
+        className="w-full p-3 my-2 rounded-lg bg-white"
         placeholder="Email"
         type="email"
         value={email}
@@ -25,7 +25,7 @@ export default function Login() {
       />
 
       <input
-        className="w-full p-3 my-2 rounded-lg"
+        className="w-full p-3 my-2 rounded-lg bg-white"
         placeholder="Password"
         type="password"
       />

@@ -3,10 +3,16 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import Footer from './components/Footer';  // Footer sudah diimpor, tapi belum digunakan—saya tambahkan di bawah jika perlu
 
 import Home from "./pages/Home";
+import DetailUKM from './pages/DetailUKM';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Anggota from "./pages/Anggota";  // Tambahan import
+import Forum from "./pages/Forum";      // Tambahan import
+import Kegiatan from "./pages/Kegiatan"; // Tambahan import
+import Laporan from "./pages/Laporan";   // Tambahan import
 
 function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,13 +28,17 @@ function AppContent() {
   const handleLogout = () => navigate("/login");
 
   return (
-    <div className="min-h-screen bg-gray-50">
-
+    <div className="min-h-screen bg-white">
       {!fullScreen && <Navbar toggleSidebar={toggleSidebar} />}
 
       <div className={!fullScreen ? "pt-16" : ""}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/ukm/:id" element={<DetailUKM />} />  {/* Tambahan route untuk DetailUKM */}
+          <Route path="/anggota" element={<Anggota />} />  {/* Tambahan route */}
+          <Route path="/forum" element={<Forum />} />      {/* Tambahan route */}
+          <Route path="/kegiatan" element={<Kegiatan />} /> {/* Tambahan route */}
+          <Route path="/laporan" element={<Laporan />} />   {/* Tambahan route */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
@@ -47,6 +57,9 @@ function AppContent() {
           onClick={toggleSidebar}
         />
       )}
+
+      {/* Tambahkan Footer jika diperlukan, tapi hanya untuk halaman non-fullScreen */}
+      {!fullScreen && <Footer />}
     </div>
   );
 }

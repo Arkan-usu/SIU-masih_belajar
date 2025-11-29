@@ -13,11 +13,11 @@ export default function Navbar({ toggleSidebar }) {
   );
 
   return (
-    <div className="fixed top-0 left-0 w-full h-16 bg-white flex items-center px-6 shadow-md z-50 border-b">
+    <div className="fixed top-0 left-0 w-full h-20 bg-white flex items-center px-6 shadow-md z-50 border-b ">
 
-      <h2 className="text-xl font-bold text-blue-500">SIU</h2>
+      <h2 className="text-4xl font-bold text-blue-500 ml-2">SIU</h2>
 
-      <div className="flex gap-4 ml-10">
+      <div className="flex flex-1 justify-center gap-20">
         <NavItem label="Home" page="/" />
         <NavItem label="Laporan" page="/laporan" />
         <NavItem label="Anggota" page="/anggota" />

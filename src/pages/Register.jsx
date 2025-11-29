@@ -14,10 +14,10 @@ export default function Register() {
 
   return (
     <FormContainer title="Register">
-      <input className="w-full p-3 my-2 rounded-lg" placeholder="Username" />
-      <input className="w-full p-3 my-2 rounded-lg" placeholder="Email" />
-      <input className="w-full p-3 my-2 rounded-lg" placeholder="Password" />
-      <input className="w-full p-3 my-2 rounded-lg" placeholder="Confirm Password" />
+      <input className="w-full p-3 my-2 rounded-lg bg-white" placeholder="Username" />
+      <input className="w-full p-3 my-2 rounded-lg bg-white" placeholder="Email" />
+      <input className="w-full p-3 my-2 rounded-lg bg-white" placeholder="Password" />
+      <input className="w-full p-3 my-2 rounded-lg bg-white" placeholder="Confirm Password" />
 
       <button
         onClick={() => navigate("/login")}
