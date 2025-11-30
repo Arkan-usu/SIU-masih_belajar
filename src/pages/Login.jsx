@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../data/UserContext"; // ⬅️ tambah ini
 
 const FormContainer = ({ children, title }) => (
   <div className="min-h-screen bg-green-800 flex items-center justify-center p-6">
@@ -12,7 +13,15 @@ const FormContainer = ({ children, title }) => (
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const navigate = useNavigate(); // 🔥 tambahkan ini
+  const navigate = useNavigate();
+  const { loginUser } = useUser(); // ⬅️ context
+
+  const handleLogin = () => {
+    if (!email) return alert("Isi email terlebih dahulu!");
+
+    loginUser({ email }); // ⬅️ simpan email ke context
+    navigate("/profile");
+  };
 
   return (
     <FormContainer title="Login">
@@ -31,7 +40,7 @@ export default function Login() {
       />
 
       <button
-        onClick={() => navigate("/")}
+        onClick={handleLogin}
         className="w-full p-3 mt-4 bg-green-800 text-white rounded-lg"
       >
         Login

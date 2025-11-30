@@ -1,26 +1,32 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import { UserProvider } from "./data/UserContext"; // <== konteks user
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Footer from './components/Footer';  // Footer sudah diimpor, tapi belum digunakan—saya tambahkan di bawah jika perlu
+import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
-import DetailUKM from './pages/DetailUKM';
+import DetailUKM from "./pages/DetailUKM";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import Anggota from "./pages/Anggota";  // Tambahan import
-import Forum from "./pages/Forum";      // Tambahan import
-import Kegiatan from "./pages/Kegiatan"; // Tambahan import
-import Laporan from "./pages/Laporan";   // Tambahan import
+import Anggota from "./pages/Anggota";
+import Forum from "./pages/Forum";
+import Kegiatan from "./pages/Kegiatan";
+import Laporan from "./pages/Laporan";
 
 function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [anggotaTerdaftar, setAnggotaTerdaftar] = useState(false);
-  const [kegiatanTerdaftar, setKegiatanTerdaftar] = useState(false);
-
 
   const toggleSidebar = () => setIsSidebarOpen((v) => !v);
 
@@ -32,22 +38,27 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Navbar tampil kecuali login & register */}
       {!fullScreen && <Navbar toggleSidebar={toggleSidebar} />}
 
       <div className={!fullScreen ? "pt-16" : ""}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/ukm/:id" element={<DetailUKM />} />  {/* Tambahan route untuk DetailUKM */}
-          <Route path="/anggota" element={<Anggota setAnggotaTerdaftar={setAnggotaTerdaftar}/>} />  {/* Tambahan route */}
-          <Route path="/forum" element={<Forum />} />      {/* Tambahan route */}
-          <Route path="/kegiatan" element={<Kegiatan setKegiatanTerdaftar={setKegiatanTerdaftar} />} /> {/* Tambahan route */}
-          <Route path="/laporan" element={<Laporan />} />   {/* Tambahan route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile anggota={anggotaTerdaftar} kegiatan={kegiatanTerdaftar}/>} />
-        </Routes>
+        {/* Seluruh route berada dalam UserProvider */}
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/ukm/:id" element={<DetailUKM />} />
+            <Route path="/anggota" element={<Anggota />} />
+            <Route path="/forum" element={<Forum />} />
+            <Route path="/kegiatan" element={<Kegiatan />} />
+            <Route path="/laporan" element={<Laporan />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </UserProvider>
       </div>
 
+      {/* Sidebar */}
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
@@ -55,6 +66,7 @@ function AppContent() {
         onLogout={handleLogout}
       />
 
+      {/* Overlay klik untuk menutup sidebar */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30"
@@ -62,7 +74,7 @@ function AppContent() {
         />
       )}
 
-      {/* Tambahkan Footer jika diperlukan, tapi hanya untuk halaman non-fullScreen */}
+      {/* Footer hanya untuk halaman biasa */}
       {!fullScreen && <Footer />}
     </div>
   );

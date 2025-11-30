@@ -1,45 +1,38 @@
-export default function Profile({ anggota, kegiatan }) {
+import { useUser } from "../data/UserContext";
+
+export default function Profile() {
+  const { user } = useUser(); // gunakan "user" sesuai UserContext
+
   return (
     <div className="min-h-screen bg-gray-100 py-16 px-6 flex justify-center">
-      <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-lg text-center">
+      <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-lg">
 
-        {/* FOTO PROFIL */}
-        <img
-          src="https://via.placeholder.com/120"
-          alt="Profile"
-          className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-green-600"
-        />
-
-        {/* NAMA USER */}
-        <h2 className="text-3xl font-bold text-gray-800">Nama Pengguna</h2>
-        <p className="text-gray-600 mb-6">email@example.com</p>
+        {/* USER INFO */}
+        <h2 className="text-3xl font-bold text-center mb-2">{user.nama}</h2>
+        <p className="text-center text-gray-600">{user.email}</p>
+        <p className="text-center text-gray-500 text-sm mt-1">
+          User ID: <span className="font-semibold">{user.id}</span>
+        </p>
 
         <hr className="my-6" />
 
-        {/* STATUS ANGGOTA */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-lg font-semibold">Status Anggota</span>
-          <span
-            className={`px-3 py-1 rounded-full text-white text-sm ${
-              anggota ? "bg-green-600" : "bg-red-500"
-            }`}
-          >
-            {anggota ? "Sudah Terdaftar" : "Belum Terdaftar"}
-          </span>
-        </div>
+        {/* KEANGGOTAAN */}
+        <h3 className="text-xl font-semibold mb-2">Keanggotaan UKM</h3>
+        {user.listAnggota.length > 0 ? (
+          user.listAnggota.map((ukm, i) => <p key={i}>• {ukm}</p>)
+        ) : (
+          <p className="text-gray-500">Belum terdaftar sebagai anggota UKM</p>
+        )}
 
-        {/* STATUS KEGIATAN */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-lg font-semibold">Status Kegiatan</span>
-          <span
-            className={`px-3 py-1 rounded-full text-white text-sm ${
-              kegiatan ? "bg-green-600" : "bg-red-500"
-            }`}
-          >
-            {kegiatan ? "Sudah Terdaftar" : "Belum Terdaftar"}
-          </span>
-        </div>
+        <hr className="my-6" />
 
+        {/* KEGIATAN */}
+        <h3 className="text-xl font-semibold mb-2">Kegiatan Diikuti</h3>
+        {user.listKegiatan.length > 0 ? (
+          user.listKegiatan.map((k, i) => <p key={i}>• {k}</p>)
+        ) : (
+          <p className="text-gray-500">Belum mengikuti kegiatan apapun</p>
+        )}
       </div>
     </div>
   );
